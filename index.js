@@ -5,8 +5,8 @@ var kraken = require('kraken-js'),
     db = require('./lib/db');
 
 app.configure = function configure(nconf, next) {
-    
-	db.init(nconf.dbPath);
+    var dbPath = nconf.get('dbPath')
+	db.init(dbPath);
     // Fired when an app configures itself
     next(null);
 };

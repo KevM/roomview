@@ -3,5 +3,5 @@
 .build/
 node_modules/
 *.iml
-*.db
+db
 public/components
