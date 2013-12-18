@@ -1,9 +1,10 @@
+/*global describe:false, it:false, before:false*/
 "use strict";
 
 var RoomUser = require("../models/RoomUser"),
 expect = require("chai").expect;
 
-describe('room user', function() {
+describe("room user", function() {
 
     var user = null;
 
@@ -23,7 +24,7 @@ describe('room user', function() {
         expect(new RoomUser({badge: "1"}).status).to.equal("checking in");
     });
  
-    describe('check in', function () {
+    describe("check in", function () {
 
         before(function () {
             user.checkIn();
@@ -42,7 +43,7 @@ describe('room user', function() {
         });
     });
 
-    describe('check out', function () {
+    describe("check out", function () {
 
         before(function () {
             user.checkIn();
