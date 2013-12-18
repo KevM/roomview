@@ -15,14 +15,14 @@ function RoomUser(args) {
 
     this.checkIn = function(status){
         this.status = status || "in";
-        this.present = true;
+        this.isPresent = true;
         this.inAt = new Date();
         this.updatedAt = new Date();
     };
 
     this.checkOut = function(status){
         this.status = status || "out";
-        this.present = false;
+        this.isPresent = false;
         this.outAt = new Date();
         this.updatedAt = new Date();
     };
