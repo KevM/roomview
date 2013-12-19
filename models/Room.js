@@ -7,7 +7,7 @@ var RoomUser = require("./RoomUser");
 
 function findUser(badge, location) {
 	var deferred = Q.defer();
-	db.users.findOne({badge: badge}, function(error, doc) {
+	db.users.findOne({badge: badge, location: location, isPresent : true}, function(error, doc) {
 		if (error) {
 			deferred.reject(new Error(error));
 		} else {
@@ -25,7 +25,7 @@ function findUser(badge, location) {
 
 function locationUsers(location) {
     var deferred = Q.defer();
-    db.users.find({location: location}, function(error, docs) {
+    db.users.find({location: location, isPresent: true}, function(error, docs) {
         if (error) {
             deferred.reject(new Error(error));
         } else {

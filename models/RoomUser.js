@@ -3,10 +3,10 @@
 var assert = require("assert");
 
 function RoomUser(args) {
-	assert.ok(args.badge, "Need badge number.");
+	assert.ok(args.badge && args.location, "Need badge number and location.");
 
 	this.badge = args.badge;
-    this.location = args.location || "default";
+    this.location = args.location;
 	this.name = args.name || "";
     this.status = args.status || "checking in";
     this.isPresent = args.isPresent;

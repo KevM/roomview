@@ -12,16 +12,8 @@ describe("room user", function() {
         user = new RoomUser({badge: "badge#", location : "location"});
     });
 
-    it("location should use given value", function () {
-        expect(user.location).to.equal("location");
-    });
-
-    it("location should default when not given", function () {
-        expect(new RoomUser({badge: "1"}).location).to.equal("default");
-    });
-
     it("default status should be checking in", function () {
-        expect(new RoomUser({badge: "1"}).status).to.equal("checking in");
+        expect(user.status).to.equal("checking in");
     });
  
     describe("check in", function () {

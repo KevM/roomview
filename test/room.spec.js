@@ -20,7 +20,7 @@ describe("room", function() {
         require("fs").unlink("./users.db", done);
     });
 
-    describe("find location users", function() {
+    describe("find present location users", function() {
 
         var room1, room2, room3, users;
 
@@ -30,18 +30,17 @@ describe("room", function() {
             room3 = new Room({location : "empty room"});
 
             users = [
-                new RoomUser({ badge: "1", location : "room1", name : "Fred"}),
-                new RoomUser({ badge: "2", location : "room1", name : "Biff"}),
-                new RoomUser({ badge: "3", location : "room2", name : "Frank"})
+                new RoomUser({ badge: "1", location : "room1", isPresent: true }),
+                new RoomUser({ badge: "2", location : "room1", isPresent: false }),
+                new RoomUser({ badge: "3", location : "room2", isPresent: true })
             ];
             db.users.insert(users, function() { done(); });
         });
 
-        it("should return room1 users", function (done) {
+        it("should return room1 users that are present", function (done) {
             room1.users().done(function(results) {
-                expect(results.length).to.equal(2);
+                expect(results.length).to.equal(1);
                 expect(results[0].badge).to.equal("1");
-                expect(results[1].badge).to.equal("2");
                 done();
             });
         });
@@ -65,7 +64,7 @@ describe("room", function() {
     describe("findUser", function () {
 
         var room = null;
-        var expectedUser = {badge : "known user", name: "Fred Garvins"};
+        var expectedUser = {badge : "known user", location: "location", name: "Fred Garvins", isPresent: true };
 
         before(function (done) {
             room = new Room({location : "location"});
@@ -80,7 +79,7 @@ describe("room", function() {
         });
 
         it("should return known user", function (done) {
-            room.findUser("known user").then(function(user) {
+            room.findUser("known user").done(function(user) {
                 expect(user.name).to.equal("Fred Garvins");
                 done();
             });
@@ -94,13 +93,13 @@ describe("room", function() {
 
         before(function (done) {
             room = new Room({location : "saveRoom1"});
-            user = new RoomUser({ badge: "1", location : "not saveRoom1", name : "Fred"});
+            user = new RoomUser({ badge: "saveUser", location : "saveRoom1", name : "Fred", isPresent: true });
             db.users.insert(user, function(err, newDoc) { done(); });
         });
 
         it("should save user who does not exist", function (done) {
 
-            var user = new RoomUser({badge: "new user", name: "First Last"});
+            var user = new RoomUser({badge: "new saveUser", location: "saveRoom1", name: "First Last", isPresent: true });
             user.checkIn();
 
             room.saveUser(user)
