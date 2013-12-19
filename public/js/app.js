@@ -2,7 +2,9 @@
 
 require([
     'config',
-    'jquery'
+    'jquery',
+    'bootstrap-transition',
+    'bootstrap-collapse'
     ], function (config, $) {
 
     var app = {
