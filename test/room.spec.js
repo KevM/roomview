@@ -2,6 +2,7 @@
 "use strict";
 
 var Room = require("../models/Room"),
+RoomUser = require("../models/RoomUser"),
 expect = require("chai").expect;
 
 describe("room", function() {
@@ -14,6 +15,11 @@ describe("room", function() {
         done();
     });
 
+    after(function(done) {
+        //blow away database that was created
+        require("fs").unlink("./users.db", done);
+    });
+
     describe("find location users", function() {
 
         var room1, room2, room3, users;
@@ -24,19 +30,15 @@ describe("room", function() {
             room3 = new Room({location : "empty room"});
 
             users = [
-            { badge: "1", location : "room1", name : "Fred"},
-            { badge: "2", location : "room1", name : "Biff"},
-            { badge: "3", location : "room2", name : "Frank"}
+                new RoomUser({ badge: "1", location : "room1", name : "Fred"}),
+                new RoomUser({ badge: "2", location : "room1", name : "Biff"}),
+                new RoomUser({ badge: "3", location : "room2", name : "Frank"})
             ];
             db.users.insert(users, function() { done(); });
         });
 
-        after(function (done) {
-            db.users.remove(users, function() { done(); });
-        });
-
         it("should return room1 users", function (done) {
-            room1.users().then(function(results) {
+            room1.users().done(function(results) {
                 expect(results.length).to.equal(2);
                 expect(results[0].badge).to.equal("1");
                 expect(results[1].badge).to.equal("2");
@@ -70,10 +72,6 @@ describe("room", function() {
             db.users.insert(expectedUser, function() { done(); });
         });
 
-        after(function (done) {
-            db.users.remove(expectedUser, function() { done(); });
-        });
-
         it("should return new entry for unknown user", function (done) {
             room.findUser("unknown").then(function(user) {
                 expect(user.badge).to.equal("unknown");
@@ -90,4 +88,47 @@ describe("room", function() {
 
     });
 
+    describe("saveUser", function () {
+
+        var room, user;
+
+        before(function (done) {
+            room = new Room({location : "saveRoom1"});
+            user = new RoomUser({ badge: "1", location : "not saveRoom1", name : "Fred"});
+            db.users.insert(user, function(err, newDoc) { done(); });
+        });
+
+        it("should save user who does not exist", function (done) {
+
+            var user = new RoomUser({badge: "new user", name: "First Last"});
+            user.checkIn();
+
+            room.saveUser(user)
+                .then(function(result) {
+                    return room.findUser(result.badge);
+                })
+                .done(function(result) {
+                    expect(result.badge).to.equal(user.badge);
+                    expect(result.name).to.equal(user.name);
+                    expect(result.status).to.equal(user.status);
+
+                    done();
+                });
+        });
+
+        it("should save user who already exists", function (done) {
+            room.findUser(user.badge)
+                .then(function(result) {
+                    result.checkOut();
+                    return room.saveUser(result);
+                })
+                .done(function(result) {
+                    expect(result.badge).to.equal(user.badge);
+                    expect(result.name).to.equal(user.name);
+                    expect(result.status).to.equal("out");
+
+                    done();
+                });
+        });
+    });
 });

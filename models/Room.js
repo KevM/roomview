@@ -13,9 +13,11 @@ function findUser(badge, location) {
 		} else {
 
 			if(doc === null) {
+                //todo do not set location of new user?
 				doc = new RoomUser({badge: badge, location: location});
 			}
-			deferred.resolve(doc);
+            var user = new RoomUser(doc);
+			deferred.resolve(user);
 		}
 	});
 	return deferred.promise;
@@ -27,7 +29,22 @@ function locationUsers(location) {
         if (error) {
             deferred.reject(new Error(error));
         } else {
-            deferred.resolve(docs);
+
+            var users = docs.map(function(d) { return new RoomUser(d); });
+            deferred.resolve(users);
+        }
+    });
+    return deferred.promise;
+}
+
+function saveUser(user) {
+    var deferred = Q.defer();
+    db.users.update({badge: user.badge}, user, {upsert: true}, function(error) {
+        if (error) {
+            deferred.reject(new Error(error));
+        } else {
+            //console.log("User with badge", user.badge, upsert ? "inserted into collection" : "updated in the collection");
+            deferred.resolve(user);
         }
     });
     return deferred.promise;
@@ -40,12 +57,16 @@ function Room(args) {
 	this.name = args.name || "";
 	this.createdAt = args.createdAt || new Date();
 	this.updatedAt = new Date();
-    var self = this;
+
 	this.findUser = function(badge) {
-        return findUser(badge, self.location);
+        return findUser(badge, this.location);
     };
     this.users = function() {
-        return locationUsers(self.location);
+        return locationUsers(this.location);
+    };
+    this.saveUser = function(user) {
+        user.location = this.location;
+        return saveUser(user);
     };
 }
 

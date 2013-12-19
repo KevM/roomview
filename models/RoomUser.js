@@ -8,10 +8,10 @@ function RoomUser(args) {
 	this.badge = args.badge;
     this.location = args.location || "default";
 	this.name = args.name || "";
-
+    this.status = args.status || "checking in";
+    this.isPresent = args.isPresent;
 	this.createdAt = args.createdAt || new Date();
 	this.updatedAt = new Date();
-    this.status = args.status || "checking in";
 
     this.checkIn = function(status){
         this.status = status || "in";
