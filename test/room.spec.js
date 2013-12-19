@@ -130,4 +130,35 @@ describe("room", function() {
                 });
         });
     });
+
+    describe("scanBadge", function() {
+        var room;
+
+        before(function () {
+            room = new Room({location : "scanBadge room"});
+        });
+
+        it("should check in user not already present in the room", function(done) {
+            room.scanBadge("not present")
+                .done(function(user) {
+                    expect(user.isPresent).to.equal(true);
+                    done();
+                });
+        });
+
+        it("should check out user not already present in the room", function(done) {
+            var user = new RoomUser({badge: "present", location: room.location});
+            user.checkIn();
+
+            room.saveUser(user)
+                .then(function(result) {
+                    return room.scanBadge(result.badge)
+                })
+                .done(function(result) {
+                    expect(result.isPresent).to.equal(false);
+                    done();
+                });
+        });
+
+    });
 });

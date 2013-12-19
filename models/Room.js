@@ -7,14 +7,14 @@ var RoomUser = require("./RoomUser");
 
 function findUser(badge, location) {
 	var deferred = Q.defer();
-	db.users.findOne({badge: badge, location: location, isPresent : true}, function(error, doc) {
+	db.users.findOne({badge: badge, location: location}, function(error, doc) {
 		if (error) {
 			deferred.reject(new Error(error));
 		} else {
 
+            //TODO maybe we should return null here and let other concerns handle setting up a default
 			if(doc === null) {
-                //todo do not set location of new user?
-				doc = new RoomUser({badge: badge, location: location});
+				doc = new RoomUser({badge: badge, location: location, isPresent: true});
 			}
             var user = new RoomUser(doc);
 			deferred.resolve(user);
@@ -57,6 +57,7 @@ function Room(args) {
 	this.name = args.name || "";
 	this.createdAt = args.createdAt || new Date();
 	this.updatedAt = new Date();
+    var self = this;
 
 	this.findUser = function(badge) {
         return findUser(badge, this.location);
@@ -67,6 +68,24 @@ function Room(args) {
     this.saveUser = function(user) {
         user.location = this.location;
         return saveUser(user);
+    };
+
+    this.scanBadge = function(badge) {
+        return self.findUser(badge)
+            .then(function(user) {
+                console.log("badge scan found user", user);
+
+                if (user.status === "in") {
+                    user.checkOut();
+                }
+                else {
+                    user.checkIn();
+                }
+
+                console.log("user is now", user);
+
+                return self.saveUser(user);
+            });
     };
 }
 

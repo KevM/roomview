@@ -9,7 +9,7 @@ function RoomUser(args) {
     this.location = args.location;
 	this.name = args.name || "";
     this.status = args.status || "checking in";
-    this.isPresent = args.isPresent;
+    this.isPresent = args.isPresent || false;
 	this.createdAt = args.createdAt || new Date();
 	this.updatedAt = new Date();
 
@@ -18,6 +18,8 @@ function RoomUser(args) {
         this.isPresent = true;
         this.inAt = new Date();
         this.updatedAt = new Date();
+
+        return this;
     };
 
     this.checkOut = function(status){
@@ -25,6 +27,8 @@ function RoomUser(args) {
         this.isPresent = false;
         this.outAt = new Date();
         this.updatedAt = new Date();
+
+        return this;
     };
 }
 
