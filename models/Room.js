@@ -66,11 +66,17 @@ function Room(args) {
         return locationUsers(this.location);
     };
     this.saveUser = function(user) {
+        //TODO setting the location of the user here feels hacky
+        // better to do it in scanBadge
         user.location = this.location;
         return saveUser(user);
     };
 
     this.scanBadge = function(badge) {
+
+        //TODO maybe add some logic that checks if the user
+        // is checked into another location and checks them out from their first.
+
         return self.findUser(badge)
             .then(function(user) {
 
