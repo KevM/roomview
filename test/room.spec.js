@@ -142,6 +142,7 @@ describe("room", function() {
             room.scanBadge("not present")
                 .done(function(user) {
                     expect(user.isPresent).to.equal(true);
+                    expect(user.inAt).to.be.a("Date");
                     done();
                 });
         });
@@ -156,6 +157,7 @@ describe("room", function() {
                 })
                 .done(function(result) {
                     expect(result.isPresent).to.equal(false);
+                    expect(result.outAt).to.be.a("Date");
                     done();
                 });
         });
