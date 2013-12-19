@@ -73,7 +73,6 @@ function Room(args) {
     this.scanBadge = function(badge) {
         return self.findUser(badge)
             .then(function(user) {
-                console.log("badge scan found user", user);
 
                 if (user.status === "in") {
                     user.checkOut();
@@ -81,8 +80,6 @@ function Room(args) {
                 else {
                     user.checkIn();
                 }
-
-                console.log("user is now", user);
 
                 return self.saveUser(user);
             });
