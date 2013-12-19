@@ -25,7 +25,7 @@ module.exports = function (grunt) {
             compile: {
                 options: {
                     yuicompress: true,
-                    paths: ['public/css']
+                    paths: ['public/css', 'public/components/bootstrap/less']
                 },
                 files: {
                     '.build/css/app.css': 'public/css/app.less'

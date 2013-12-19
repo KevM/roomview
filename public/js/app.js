@@ -1,8 +1,9 @@
 'use strict';
 
-
-
-require(['config' /*, Dependencies */], function (config) {
+require([
+    'config',
+    'jquery'
+    ], function (config, $) {
 
     var app = {
         initialize: function () {

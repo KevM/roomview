@@ -1,0 +1,9 @@
+{>"layouts/master" /}
+
+{<body}
+<div class="container">
+<h1>Rooms</h1>
+
+<p>Here we'll list the rooms known to the app and let the user create one if need be.</p>
+</div>
+{/body}
