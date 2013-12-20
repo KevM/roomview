@@ -75,7 +75,7 @@ function Room(args) {
     this.scanBadge = function(badge) {
 
         //TODO maybe add some logic that checks if the user
-        // is checked into another location and checks them out from their first.
+        //  is checked into another location and checks them out from their first.
 
         return self.findUser(badge)
             .then(function(user) {

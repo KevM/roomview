@@ -11,12 +11,12 @@ describe("room", function() {
 
     before(function(done) {
         db = require("../lib/db");
-        db.init();
+        db.init("./tmp");
         done();
     });
 
     after(function(done) {
-        db._erase();
+        db._erase("./tmp");
         done();
     });
 
