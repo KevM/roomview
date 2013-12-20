@@ -16,8 +16,8 @@ describe("room", function() {
     });
 
     after(function(done) {
-        //blow away database that was created
-        require("fs").unlink("./users.db", done);
+        db._erase();
+        done();
     });
 
     describe("find present location users", function() {
