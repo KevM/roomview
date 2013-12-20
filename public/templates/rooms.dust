@@ -3,7 +3,15 @@
 {<body}
 <div class="container">
 <h1>Rooms</h1>
-
-<p>Here we'll list the rooms known to the app and let the user create one if need be.</p>
+{?rooms}
+  <ul>
+    {#rooms}
+      <li>{location} - {name}</li>
+    {/rooms}
+  </ul>
+{:else}
+<div class="alert alert-info">
+    No Rooms are currently present. Please create some.
 </div>
+{/rooms}
 {/body}

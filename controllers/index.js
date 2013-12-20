@@ -10,11 +10,4 @@ module.exports = function (server) {
 
     });
 
-    server.get('/rooms', function (req, res) {
-        var model = { name: 'rooms' };
-
-        res.render('rooms', model);
-
-    });
-
 };
