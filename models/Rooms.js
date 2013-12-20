@@ -29,7 +29,21 @@ function saveRoom(room) {
     return deferred.promise;
 }
 
+function findRoom(location) {
+    var deferred = Q.defer();
+    db.rooms.findOne({location: location}, function(error, doc) {
+        if (error) {
+            deferred.reject(new Error(error));
+        } else {
+            var room = new Room(doc);
+            deferred.resolve(room);
+        }
+    });
+    return deferred.promise;
+}
+
 module.exports = {
     saveRoom : saveRoom,
-    getAll : getRooms
+    getAll : getRooms,
+    findRoom: findRoom
 };

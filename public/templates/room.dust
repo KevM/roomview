@@ -1,0 +1,9 @@
+{>"layouts/master" /}
+
+{<body}
+<div class="container">
+<h1>{room.location} <small>{room.name}</small></h1>
+
+<p>Here we put a listing of people currently in the room.</p>
+
+{/body}

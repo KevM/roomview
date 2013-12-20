@@ -1,8 +1,10 @@
 {>"layouts/master" /}
 
 {<body}
-<div class="container">
+
 <h1>Rooms</h1>
+<a href="/room/new" class="btn btn-primary">Create Room</a>
+
 {?rooms}
   <ul>
     {#rooms}
@@ -14,4 +16,5 @@
     No Rooms are currently present. Please create some.
 </div>
 {/rooms}
+
 {/body}

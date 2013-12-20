@@ -79,4 +79,9 @@ describe("rooms", function() {
         });
     });
 
+    describe("find room", function() {
+        it("should return null when room does not exist");
+        it("should find an existing room");
+    });
+
 });
