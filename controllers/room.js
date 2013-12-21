@@ -32,7 +32,39 @@ module.exports = function (server) {
                 res.send(404, "That room does not exist.");
             }
 
-            res.render("room", { room : room });
+            room.users().done(function(users) {
+                res.render("room", { room : room, users : users });
+            });
+        });
+    });
+
+    server.get("/room/:location/scan", function (req, res) {
+        var location = req.params.location;
+
+        Rooms.findRoom(location).done(function(room) {
+
+            if (!room) {
+                res.send(404, "That room does not exist.");
+            }
+
+            res.render("room-scan", { room : room });
+        });
+    });
+
+
+    server.post("/room/:location/scan", function (req, res) {
+        var location = req.params.location;
+
+        Rooms.findRoom(location).then(function(room) {
+
+            if (!room) {
+                res.send(404, "That room does not exist.");
+            }
+
+            room.scanBadge(req.body.badge).done(function(user) {
+            console.log("scanned badge for room ",location, " user ", user);
+                res.render("room-scan", { room : room, user : user });
+            });
         });
     });
 };

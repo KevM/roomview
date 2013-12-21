@@ -64,7 +64,10 @@ describe("room", function() {
     describe("findUser", function () {
 
         var room = null;
-        var expectedUser = {badge : "known user", location: "location", name: "Fred Garvins", isPresent: true };
+        var users = [
+                {badge : "known user", location: "location", name: "Fred Garvins", isPresent: true }
+                {badge : "known user at another location", location: "location2", name: "Biff Henderson", isPresent: true }
+            ];
 
         before(function (done) {
             room = new Room({location : "location"});
@@ -74,9 +77,19 @@ describe("room", function() {
         it("should return new entry for unknown user", function (done) {
             room.findUser("unknown").then(function(user) {
                 expect(user.badge).to.equal("unknown");
+                expect(user.name).to.equal("");
                 done();
             });
         });
+
+        it("should return new entry for known user in another location", function (done) {
+            room.findUser("known user at another location").then(function(user) {
+                expect(user.badge).to.equal("known user at another location");
+                done();
+            });
+        });
+
+        it("should checkout user checked into another location");
 
         it("should return known user", function (done) {
             room.findUser("known user").done(function(user) {

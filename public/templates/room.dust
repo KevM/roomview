@@ -1,9 +1,20 @@
 {>"layouts/master" /}
 
 {<body}
-<div class="container">
 <h1>{room.location} <small>{room.name}</small></h1>
 
-<p>Here we put a listing of people currently in the room.</p>
-
+<h2>Present in room</h2>
+{?users}
+  <ul>
+    {#users}
+    <li>
+        {name} - checked in at {createdAt}
+    </li>
+    {/users}
+  </ul>
+{:else}
+<div class="alert alert-info">
+    The room is currently empty.
+</div>
+{/users}
 {/body}

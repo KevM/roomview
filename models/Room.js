@@ -56,19 +56,19 @@ function Room(args) {
 
 	this.name = args.name || "";
 	this.createdAt = args.createdAt || new Date();
-	this.updatedAt = new Date();
+	this.updatedAt = args.updatedAt || new Date();
     var self = this;
 
 	this.findUser = function(badge) {
-        return findUser(badge, this.location);
+        return findUser(badge, self.location);
     };
     this.users = function() {
-        return locationUsers(this.location);
+        return locationUsers(self.location);
     };
     this.saveUser = function(user) {
         //TODO setting the location of the user here feels hacky
         // better to do it in scanBadge
-        user.location = this.location;
+        user.location = self.location;
         return saveUser(user);
     };
 
