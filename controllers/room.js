@@ -24,12 +24,12 @@ module.exports = function (server) {
     });
 
     server.get("/room/:location", function (req, res) {
-        var location = req.params["location"];
+        var location = req.params.location;
 
         Rooms.findRoom(location).done(function(room) {
 
             if (!room) {
-                res.send(404, 'That room does not exist.');
+                res.send(404, "That room does not exist.");
             }
 
             res.render("room", { room : room });
