@@ -31,11 +31,16 @@ function saveRoom(room) {
 
 function findRoom(location) {
     var deferred = Q.defer();
-    db.rooms.findOne({location: location}, function(error, doc) {
+    db.rooms.findOne({location: location}, function(error, room) {
         if (error) {
             deferred.reject(new Error(error));
-        } else {
-            var room = new Room(doc);
+        }
+        else {
+
+            if(room !== null) {
+                room = new Room(room);
+            }
+
             deferred.resolve(room);
         }
     });

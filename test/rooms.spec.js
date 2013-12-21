@@ -80,8 +80,19 @@ describe("rooms", function() {
     });
 
     describe("find room", function() {
-        it("should return null when room does not exist");
-        it("should find an existing room");
+        it("should return null when room does not exist", function(done) {
+            Rooms.findRoom("does not exist").done(function(room) {
+                expect(room).to.equal(null);
+                done();
+            });
+        });
+        it("should find an existing room", function(done) {
+            var expectedRoom = rooms[0];
+            Rooms.findRoom(expectedRoom.location).done(function(room) {
+                //expect(room.name).to.equal(expectedRoom.name);
+                done();
+            });
+        });
     });
 
 });
