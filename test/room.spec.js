@@ -64,10 +64,7 @@ describe("room", function() {
     describe("findUser", function () {
 
         var room = null;
-        var users = [
-                {badge : "known user", location: "location", name: "Fred Garvins", isPresent: true }
-                {badge : "known user at another location", location: "location2", name: "Biff Henderson", isPresent: true }
-            ];
+        var expectedUser = {badge : "known user", location: "location", name: "Fred Garvins", isPresent: true };
 
         before(function (done) {
             room = new Room({location : "location"});
