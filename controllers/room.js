@@ -1,6 +1,6 @@
 "use strict";
 
-var Rooms = require("../models/Rooms.js");
+var Rooms = require("../models/rooms.js");
 var Room = require("../models/Room.js");
 
 module.exports = function (server) {
@@ -62,7 +62,7 @@ module.exports = function (server) {
             }
 
             room.scanBadge(req.body.badge).done(function(user) {
-            console.log("scanned badge for room ",location, " user ", user);
+                console.log("scanned badge for room ",location, " user ", user);
                 res.render("room-scan", { room : room, user : user });
             });
         });

@@ -1,7 +1,7 @@
 /*global describe:false, it:false, before:false, after:false*/
 "use strict";
 
-var Rooms = require("../models/Rooms"),
+var Rooms = require("../models/rooms"),
 Room = require("../models/Room"),
 expect = require("chai").expect;
 

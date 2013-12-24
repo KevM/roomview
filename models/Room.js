@@ -4,6 +4,7 @@ var db = require("../lib/db");
 var Q = require("Q");
 var assert = require("assert");
 var RoomUser = require("./RoomUser");
+var students = require("./students");
 
 function findUser(badge, location) {
 	var deferred = Q.defer();
@@ -39,6 +40,7 @@ function locationUsers(location) {
 
 function saveUser(user) {
     var deferred = Q.defer();
+
     db.users.update({badge: user.badge}, user, {upsert: true}, function(error) {
         if (error) {
             deferred.reject(new Error(error));
@@ -66,10 +68,15 @@ function Room(args) {
         return locationUsers(self.location);
     };
     this.saveUser = function(user) {
-        //TODO setting the location of the user here feels hacky
-        // better to do it in scanBadge
         user.location = self.location;
-        return saveUser(user);
+
+        return students.findStudent(user.badge)
+            .then(function(student) {
+                if(student !== null) {
+                    user.name = student.name;
+                }
+                return saveUser(user);
+            });
     };
 
     this.scanBadge = function(badge) {
