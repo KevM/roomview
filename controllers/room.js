@@ -55,6 +55,13 @@ module.exports = function (server) {
     server.post("/room/:location/scan", function (req, res) {
         var location = req.params.location;
 
+        var badge = req.body.badge;
+
+        if(!badge) {
+            res.redirect("/room/" + location + "/scan");
+            return;
+        }
+
         Rooms.findRoom(location).then(function(room) {
 
             if (!room) {
