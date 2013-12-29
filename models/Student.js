@@ -3,7 +3,7 @@
 var assert = require("assert");
 
 function Student(args) {
-	assert.ok(args.badge, "Need badge number and location.");
+	assert.ok(args.badge, "Need badge number.");
 
 	this.badge = args.badge;
 	this.name = args.name || "";

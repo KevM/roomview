@@ -20,6 +20,20 @@ function findStudent(badge) {
     return deferred.promise;
 }
 
+function saveStudent(student) {
+
+    var deferred = Q.defer();
+    db.students.update({badge: student.badge}, student, {upsert: true}, function(error) {
+        if (error) {
+            deferred.reject(new Error(error));
+        } else {
+            deferred.resolve(student);
+        }
+    });
+    return deferred.promise;
+}
+
 module.exports = {
-    findStudent : findStudent
+    findStudent : findStudent,
+    saveStudent : saveStudent
 };
