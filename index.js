@@ -35,3 +35,7 @@ kraken.create(app).listen(function (err) {
         console.error(err);
     }
 });
+
+process.on('uncaughtException', function (err) {
+  console.log('Oh SNAP! Caught exception: ' + err);
+});
