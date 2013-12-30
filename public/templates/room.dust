@@ -9,13 +9,18 @@
 
 <h2>Present in room</h2>
 {?users}
-  <ul>
+<table class="table table-hover">
+    <thead><th>Name</th><th>In At</th><th>Actions</th></thead>
     {#users}
-    <li>
-        {name} - checked in at {createdAt}
-    </li>
+    <tr>
+        <td>{name}</td><td>{createdAt}</td>
+        <td><button type="button" class="btn btn-default btn-xs">
+            <a href="/room/{room.location}/checkout?badge={badge}"><span class="glyphicon glyphicon-remove"></span> Check out</a>
+            </button>
+            </td>
+    </tr>
     {/users}
-  </ul>
+  </table>
 {:else}
 <div class="alert alert-info">
     The room is currently empty.

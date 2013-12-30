@@ -74,4 +74,31 @@ module.exports = function (server) {
             });
         });
     });
+
+    server.get("/room/:location/checkout", function (req, res) {
+        var location = req.params.location;
+        var badge = req.query.badge;
+
+        if(!badge) {
+            console.warn("No badge given for room " + location + " checkout. Doing nothing.");
+            res.redirect("/room/" + location);
+            return;
+        }
+
+        var room = new Room({location: location});
+        room.findUser(badge).then(function(roomUser) {
+
+            if (!roomUser) {
+                console.warn("No user " + badge + " exists in room " + location + ". Doing nothing.");
+                res.redirect("/room/" + location);
+                return;
+            }
+
+            roomUser.checkOut();
+            room.saveUser(roomUser).done(function(user) {
+                console.log("Checked user " + user + " out of room ",location);
+                res.redirect("/room/" + location);
+            });
+        });
+    });
 };
