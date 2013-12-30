@@ -3,6 +3,10 @@
 {<body}
 <h1>{room.location} <small>{room.name}</small></h1>
 
+<button type="button" class="btn btn-default btn-lg">
+  <a href="/room/{room.location}/scan"><span class="glyphicon glyphicon-screenshot"></span> Scan</a>
+</button>
+
 <h2>Present in room</h2>
 {?users}
   <ul>
