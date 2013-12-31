@@ -1,0 +1,10 @@
+{>"layouts/master" /}
+
+{<body}
+<h1>{name} <small>{badge}</small></h1>
+
+<button type="button" class="btn btn-default">
+  <a href="/student/{badge}/edit"><span class="glyphicon glyphicon-user"></span> Edit</a>
+</button>
+
+{/body}
