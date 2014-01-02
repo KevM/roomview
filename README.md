@@ -5,10 +5,11 @@ Manage when people come and go in a lab environment.
 ## Build
 
 1. Clone this repo
-2. ```npm install```
-3. ```grunt build```
-4. ```npm start```
-5. Launch your browser and nav to the app [http://localhost:8000](http://localhost:8000)
+1. ```npm install```
+1. ```bower install```
+1. ```grunt build```
+1. ```npm start```
+1. Launch your browser and nav to the app [http://localhost:8000](http://localhost:8000)
 
 ### Database
 
