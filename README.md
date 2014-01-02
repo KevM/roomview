@@ -9,6 +9,7 @@ Manage when people come and go in a lab environment.
 1. ```bower install```
 1. ```grunt build```
 1. ```npm start```
+1. ```mv public/components/bootstrap/dist/fonts ./build/fonts``` (temporary move of bootstrap glyphs)
 1. Launch your browser and nav to the app [http://localhost:8000](http://localhost:8000)
 
 ### Database
