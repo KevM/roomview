@@ -6,10 +6,12 @@
 <a href="/room/new" class="btn btn-primary">Create Room</a>
 
 {?rooms}
-  <ul>
+  <ul class="list-unstyled">
     {#rooms}
     <li>
+    <h3>
         <a href="/room/{location}">{location} - {name}</a>
+    </h3>
     </li>
     {/rooms}
   </ul>
